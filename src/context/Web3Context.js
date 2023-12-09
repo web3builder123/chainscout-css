@@ -13,10 +13,11 @@ export const Web3ContextProvider = (props) => {
   const [historydata, setHistoryData]= useState();
   const [percent, setPercent]= useState();
   const [thresh, setThresh]= useState();
-
+  const [selectedNetwork, setSelectedNetwork] = useState("");
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null); 
   const [chainId, setChainId]= useState(80001);
+  const [network, setNetwork]= useState();
 
   let add = localStorage.getItem("address");
 
@@ -93,6 +94,16 @@ export const Web3ContextProvider = (props) => {
       ? `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}`
       : addr;
 
+      const networkName = (selectedNetwork) => {
+        const networkMap = {
+          80001: "POLYGON",
+          11155111: "Sepolia",
+          59140: "Linea",
+        };
+      
+        return networkMap[selectedNetwork] || "";
+      };
+
       
 
   const Auth = Buffer.from(
@@ -153,7 +164,15 @@ export const Web3ContextProvider = (props) => {
     getThreshold();
     getHistoryData();
     getGasEstimate();
-  },[chainId])
+  },[chainId, selectedNetwork])
+
+  const handleNetworkChange=(e)=>{
+    const selectedValue = e.target.value;
+    setSelectedNetwork(selectedValue);
+   const network =  networkName(selectedValue)
+     setNetwork(network);
+    console.log("Selected Network:", selectedValue);
+  }
 
 
     return (
@@ -168,7 +187,10 @@ export const Web3ContextProvider = (props) => {
             data,
             historydata,
             percent,
-            thresh
+            thresh,
+            handleNetworkChange,
+             selectedNetwork,
+             network
           }}
         >
           {props.children}
