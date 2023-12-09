@@ -9,22 +9,22 @@ import { Web3Context } from "../../context/Web3Context";
     {
       name: 'Low Gas Fee',
       data: [
-        data?.low.suggestedMaxPriorityFeePerGas,
-        data?.low.suggestedMaxFeePerGas
+        data &&  data?.low.suggestedMaxPriorityFeePerGas,
+        data && data?.low.suggestedMaxFeePerGas
       ],
     },
     {
       name: 'Medium Gas Fee',
       data: [
-        data?.medium.suggestedMaxPriorityFeePerGas,
-        data?.medium.suggestedMaxFeePerGas,
+        data &&  data?.medium.suggestedMaxPriorityFeePerGas,
+        data &&  data?.medium.suggestedMaxFeePerGas,
       ],
     },
     {
       name: 'High Gas Fee',
       data: [
-        data?.high.suggestedMaxPriorityFeePerGas,
-        data?.high.suggestedMaxFeePerGas,
+        data &&  data?.high.suggestedMaxPriorityFeePerGas,
+        data &&  data?.high.suggestedMaxFeePerGas,
       ],
     },
   ];

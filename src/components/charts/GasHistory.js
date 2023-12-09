@@ -1,36 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Buffer } from "buffer";
 import axios from "axios";
+import { Web3Context } from "../../context/Web3Context";
 
-const GasHistory = () => {
-  const [data, setData] = useState();
-
-  const Auth = Buffer.from(
-    process.env.REACT_APP_INFURA_KEY + ":" + process.env.REACT_APP_INFURA_SECRET
-  ).toString("base64");
-
-  const getGasEstimate = async (chainId) => {
-    const { data } = await axios.get(
-      `https://gas.api.infura.io/networks/${chainId}/baseFeeHistory`,
-      {
-        headers: {
-          Authorization: `Basic ${Auth}`,
-        },
-      }
-    );
-    const dd = data?.slice(0, 20);
-    setData(dd);
-  };
-
-  useEffect(() => {
-    getGasEstimate(80001);
-  }, []);
+const GasHistory = () => { 
+  const { historydata} = useContext(Web3Context);
+  
 
   const series = [
     {
       name: "base Fee History",
-      data: data,
+      data: historydata && historydata,
     },
   ];
   const options = {
@@ -51,7 +32,7 @@ const GasHistory = () => {
     },
     xaxis: {
       type: "numeric", // Change to "numeric" for a numeric x-axis
-      categories: data && data.map((_, i) => i + 1), // Assuming x-axis is numeric, adjust as needed
+      categories: historydata && historydata.map((_, i) => i + 1), // Assuming x-axis is numeric, adjust as needed
     },
     colors: ["#9568ff"],
     markers: {

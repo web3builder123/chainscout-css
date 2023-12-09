@@ -4,7 +4,7 @@ import { Web3Context } from '../context/Web3Context';
 
 const TopCard = () => { 
     const [balance, setBalance]= useState();
-    const { connectWallet, address ,shortAddress, provider} = useContext(Web3Context);
+    const { connectWallet, address ,shortAddress, provider, data} = useContext(Web3Context);
 
     const getbalance= async()=>{
         const balance = await provider.getBalance(address);

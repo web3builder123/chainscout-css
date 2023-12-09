@@ -10,6 +10,9 @@ export const Web3ContextProvider = (props) => {
   const [update, setUpdate] = useState(false);
   const [aLoading, setaLoading] = useState(false);
   const [data, setData]= useState();
+  const [historydata, setHistoryData]= useState();
+  const [percent, setPercent]= useState();
+  const [thresh, setThresh]= useState();
 
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null); 
@@ -105,11 +108,50 @@ export const Web3ContextProvider = (props) => {
         },
       },
     );
-    setData(data);
-    console.log("Suggested gas fees:", data);
+    setData(data); 
+  }
+
+  const getHistoryData= async()=>{
+    const { data } = await axios.get(
+        `https://gas.api.infura.io/networks/${chainId}/baseFeeHistory`,
+        {
+          headers: {
+            Authorization: `Basic ${Auth}`,
+          },
+        }
+      );
+      const dd = data?.slice(0, 20);
+      setHistoryData(dd);
+  }
+
+  const getBasePercent= async()=>{
+    const { data } = await axios.get(
+        `https://gas.api.infura.io/networks/${chainId}/baseFeePercentile`,
+        {
+          headers: {
+            Authorization: `Basic ${Auth}`,
+          },
+        }
+      ); 
+       setPercent(data.baseFeePercentile)
+  }
+
+  const getThreshold=async()=>{ 
+    const { data } = await axios.get(
+        `https://gas.api.infura.io/networks/${chainId}/busyThreshold`,
+        {
+          headers: {
+            Authorization: `Basic ${Auth}`,
+          },
+        }
+      ); 
+      setThresh(data.busyThreshold);
   }
 
   useEffect(()=>{
+    getBasePercent();
+    getThreshold();
+    getHistoryData();
     getGasEstimate();
   },[chainId])
 
@@ -123,7 +165,10 @@ export const Web3ContextProvider = (props) => {
             address,
             update,
             provider ,
-            data
+            data,
+            historydata,
+            percent,
+            thresh
           }}
         >
           {props.children}

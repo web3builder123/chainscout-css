@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Web3Context } from '../../context/Web3Context';
 
 const Card1 = () => {
-    const { connectWallet, address } = useContext(Web3Context);
+    const {  data,percent,thresh } = useContext(Web3Context);
     return (
         <div className='container mt-5'>
             <div className="row">
@@ -10,7 +10,7 @@ const Card1 = () => {
                  <div className="card card-wiget">
 						<div className="card-body">
 							<div className="card-wiget-info">
-								<h4 className="count-num">0.000000015</h4>
+								<h4 className="count-num">{data && data.estimatedBaseFee}</h4>
 								<p>Estimated Base Fee</p> 
 							</div>	 
 						</div> 
@@ -20,8 +20,8 @@ const Card1 = () => {
                  <div className="card card-wiget">
 						<div className="card-body">
 							<div className="card-wiget-info">
-								<h4 className="count-num">0.000000015</h4>
-								<p>Estimated Base Fee</p> 
+								<h4 className="count-num">{data && data.baseFeeTrend}</h4>
+								<p>Base Fee Trend</p> 
 							</div>	 
 						</div> 
 					</div>
@@ -30,8 +30,8 @@ const Card1 = () => {
                  <div className="card card-wiget">
 						<div className="card-body">
 							<div className="card-wiget-info">
-								<h4 className="count-num">0.000000015</h4>
-								<p>Estimated Base Fee</p> 
+								<h4 className="count-num">{percent && percent}</h4>
+								<p>base Fee Percentile</p> 
 							</div>	 
 						</div> 
 					</div>
@@ -40,8 +40,8 @@ const Card1 = () => {
                  <div className="card card-wiget">
 						<div className="card-body">
 							<div className="card-wiget-info">
-								<h4 className="count-num">0.000000015</h4>
-								<p>Estimated Base Fee</p> 
+								<h4 className="count-num">{thresh && thresh}</h4>
+								<p>Busy Threshold</p> 
 							</div>	 
 						</div> 
 					</div>
