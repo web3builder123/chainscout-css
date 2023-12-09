@@ -1,41 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import axios from 'axios';
-import {Buffer} from "buffer"
+ 
+import './App.css'; 
 import Header from './components/Header';
 import TopCard from './components/TopCard';
 import Index from './components/charts';
-
-const Auth = Buffer.from(
-  process.env.REACT_APP_INFURA_KEY + ":" + process.env.REACT_APP_INFURA_SECRET,
-).toString("base64");
-
-const getGasEstimate= async(chainId)=>{
-  const { data } = await axios.get(
-    `https://gas.api.infura.io/networks/${chainId}/suggestedGasFees`,
-    {
-      headers: {
-        Authorization: `Basic ${Auth}`,
-      },
-    },
-  );
-  console.log("Suggested gas fees:", data);
-}
+import Card1 from './components/cards/card1';
+ 
 
 function App() {
   return (
     <>
-     <Header/>
+     <Header/> 
      <TopCard/>
-     <Index/>
-     <div className="container" >
-      <div className="row">
-        <div className="col">
-          <h1>Hello World</h1>
-          <button onClick={()=>getGasEstimate(1)}>Get Gas</button>
-        </div>
-      </div>
-    </div>
+     <Card1/>
+     <Index/> 
     </>
    
   );

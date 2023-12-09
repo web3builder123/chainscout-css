@@ -1,32 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
-import { Buffer } from "buffer";
+import React, { useContext, useEffect, useState } from "react";
+import ReactApexChart from "react-apexcharts"; 
+import { Web3Context } from "../../context/Web3Context";
 
- const GasPriceEstimate =()=> { 
-  const [data, setData]= useState();
-
-  const Auth = Buffer.from(
-    process.env.REACT_APP_INFURA_KEY + ":" + process.env.REACT_APP_INFURA_SECRET,
-  ).toString("base64");
-  
-  const getGasEstimate= async(chainId)=>{
-    const { data } = await axios.get(
-      `https://gas.api.infura.io/networks/${chainId}/suggestedGasFees`,
-      {
-        headers: {
-          Authorization: `Basic ${Auth}`,
-        },
-      },
-    );
-    setData(data);
-    console.log("Suggested gas fees:", data);
-  }
-
-  useEffect(()=>{
-    getGasEstimate(80001);
-  },[])
-
+ const GasPriceEstimate =()=> {  
+  const { data} = useContext(Web3Context);
   const series = [
     {
       name: 'Low Gas Fee',
@@ -116,7 +94,7 @@ import { Buffer } from "buffer";
     tooltip: {
       y: {
         formatter: function (val) {
-          return   val + "Suggested fee per Gas" ;
+          return   val + "  Suggested fee per Gas" ;
         },
       },
     },
