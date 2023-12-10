@@ -8,7 +8,7 @@ const Header = () => {
             <div className="row">
                 <div className="col">
                     <div className="d-flex justify-content-between p-3">
-                    <div className="logo-text">ChainScout</div>
+                    <div className="logo-text">Chain Lookup</div>
                   {
                     address ? <p className='text-white'>{shortAddress(address)}</p> : <div className="btn btn-primary" onClick={connectWallet}>Connect</div>
                   }  
